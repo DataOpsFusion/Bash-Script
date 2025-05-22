@@ -20,8 +20,33 @@ get_username() {
     done
 }
 
-echo "This script will create home directories for users"
-echo "Enter the number of users you want to create"
-read -r response
+echo "This script will add users and create home directories for them"
 
-get_username $response
+AUTO_CONFIRM="false"
+
+while getopts "y" opt; do
+  case ${opt} in
+    y )
+      AUTO_CONFIRM="true"
+      ;;
+    \? )
+      echo "Usage: cmd [-y]"
+      exit 1
+      ;;
+  esac
+done
+
+if [ "$AUTO_CONFIRM" == "true" ]; then
+    response="y"
+else
+    echo "You want to continue? (y/n)"
+    read response
+fi
+
+if [[ "$response" == "y" ]]; then
+    get_username $1
+    echo "Job finish complete."
+    exit 0
+else
+    echo "Exiting..."
+fi

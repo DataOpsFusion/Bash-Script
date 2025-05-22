@@ -17,16 +17,6 @@ clean_up(){
         docker network prune -f
 
         echo "Docker cleanup completed!"
-        echo "Do you want to set this as a cron job? (y/n)"
-        read -r response
-        if [[ "$response" == "y" || "$response" == "yes" ]]
-        then
-            echo "Setting up cron job..."
-            echo "0 0 * * * /bin/bash ~/docker_cleanup.sh" | crontab -
-            echo "Cron job set up successfully!"
-        else
-            echo "Cron job not set up!"
-        fi
     fi
 }
 
